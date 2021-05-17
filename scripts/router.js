@@ -49,7 +49,7 @@ router.setState = function(event, backArrow) {
 
   if(event.page === "home") {
     if(!backArrow) {
-      history.pushState(event, "", " ");
+      history.pushState(event, "", window.location.origin);
     }
     document.querySelector('h1').innerHTML = "Journal Entries";
     document.querySelector('body').classList.remove("settings");
