@@ -5,7 +5,7 @@ export const router = {};
 /**
  * Changes the "page" (state) that your SPA app is currently set to
  */
-router.setState = function() {
+router.setState = function(event, backArrow) {
   /**
    * - There are three states that your SPA app will have
    *    1. The home page
@@ -35,4 +35,35 @@ router.setState = function() {
    *    1. You may add as many helper functions in this file as you like
    *    2. You may modify the parameters of setState() as much as you like
    */
+  let prevEntry = document.getElementsByTagName('entry-page')[0];
+  let currEntry = document.createElement('entry-page');
+
+  if(event.page === "settings") {
+    if(!backArrow) {
+      history.pushState(event,"","#settings");
+    }
+    document.querySelector('h1').innerHTML = "Settings";
+    document.querySelector('body').classList.add("settings");
+    document.querySelector('body').classList.remove("single-entry");
+  }
+
+  if(event.page === "home") {
+    if(!backArrow) {
+      history.pushState(event, "", " ");
+    }
+    document.querySelector('h1').innerHTML = "Journal Entries";
+    document.querySelector('body').classList.remove("settings");
+    document.querySelector('body').classList.remove("single-entry");
+  }
+
+  if(event.page === "entry page") {
+    if(!backArrow) {
+      history.pushState(event, "", "#entry" + event.id);
+    }
+    document.querySelector('h1').innerHTML = "Entry " + event.id;
+    document.querySelector('body').classList.remove("settings");
+    currEntry.entry = event.entry;
+    document.getElementsByTagName('body')[0].className = 'single-entry';
+    prevEntry.replaceWith(currEntry);
+  }
 }
